@@ -54,3 +54,58 @@ myApp.controller('movieCtrl', function ($scope, $http) {
             });
     };
 });
+
+myApp.controller('clientCtrl', function ($scope, $http) {
+
+    $scope.clients = '';
+
+    $http.get('/Client/GetClients')
+        .success(function (result) {
+            $scope.clients = result;
+        })
+        .error(function (result) {
+            console.log(result);
+        });
+
+    $scope.saveClient = function (client) {
+        $http.post('/Client/SaveClient', { _oClient: client })
+            .success(function (result) {
+                $scope.clients = result;
+            })
+            .error(function (result) {
+                console.log(result);
+            });
+    };
+
+    $scope.client = '';
+
+    $scope.selectClient = function (id) {
+        $http.post('/Client/GetClientByID', { id: id })
+            .success(function (result) {
+                $scope.client = result;
+            })
+            .error(function (result) {
+                console.log(result);
+            });
+    };
+
+    $scope.updateClient = function (client) {
+        $http.post('/Client/UpdateClient', { _oClient: client })
+            .success(function (result) {
+                $scope.clients = result;
+            })
+            .error(function (result) {
+                console.log(result);
+            });
+    };
+
+    $scope.deleteClient = function (id) {
+        $http.post('/Client/DeleteClient', { id: id })
+            .success(function (result) {
+                $scope.clients = result;
+            })
+            .error(function (result) {
+                console.log(result);
+            });
+    };
+});
